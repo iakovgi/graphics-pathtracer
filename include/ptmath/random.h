@@ -1,11 +1,11 @@
-#ifndef PT_RANDOM_H__
-#define PT_RANDOM_H__
+#ifndef PATHTRACER_RANDOM_H__
+#define PATHTRACER_RANDOM_H__
 
 #include <random>
 #include <chrono>
 
 struct norm3_t;
-class ONB;
+class Onb;
 
 class Random
 {
@@ -20,11 +20,11 @@ public:
     
     double getUniform() noexcept;
 
-    static norm3_t coneSample(Random& rng, const ONB& onb, const double aperture) noexcept;
+    static norm3_t coneSample(Random& rng, const Onb& onb, const double aperture) noexcept;
     
 private:
     std::default_random_engine m_engine;
     std::uniform_real_distribution<double> m_distribution;
 };
 
-#endif // PT_RANDOM_H__
+#endif // PATHTRACER_RANDOM_H__

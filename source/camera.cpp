@@ -12,7 +12,7 @@ Camera::Camera(const vec3_t& eye, const norm3_t& gaze, const double vertFoV, con
     const norm3_t x = gaze.cross(up);
     const norm3_t y = x.cross(z);
     
-    m_onb = ONB(x, y, z);
+    m_onb = Onb(x, y, z);
 }
 
 Camera::Camera() noexcept

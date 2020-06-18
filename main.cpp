@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     RenderWindow window(480, 356);
     const auto scene = ScenePresets::cornellBox();
     
-    const auto params = Renderer::renderParams_t {
+    const auto params = Renderer::render_params_t {
         .nThreads = 8,
         .msaa = 2,
         .spp = 96,
@@ -21,8 +21,7 @@ int main(int argc, char *argv[])
     };
     const auto renderer = Renderer(params);
     
-    auto stop = std::atomic<bool>(std::memory_order::memory_order_relaxed);
-    stop = false;
+    auto stop = std::atomic<bool>{ false };
     auto renderThread = std::thread([&](){
         renderer.render(scene, window, std::ref(stop));
     });

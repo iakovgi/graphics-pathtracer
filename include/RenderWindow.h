@@ -1,5 +1,5 @@
-#ifndef PT_RENDERWINDOW_H__
-#define PT_RENDERWINDOW_H__
+#ifndef PATHTRACER_RENDERWINDOW_H__
+#define PATHTRACER_RENDERWINDOW_H__
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -64,4 +64,4 @@ private:
     GLuint m_to;
 };
 
-#endif //PT_RENDERWINDOW_H__
+#endif //PATHTRACER_RENDERWINDOW_H__

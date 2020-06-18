@@ -19,7 +19,7 @@ std::optional<Primitive::intersection_t> Sphere::intersect(const ray_t& ray) con
     const auto d = std::sqrt(dSquared);
     const auto inside = opSquared < m_radiusSquared;
     const auto t = inside ? b + d : b - d;
-    if(t < ptmath_epsilon) {
+    if(t < PTMATH_EPSILON) {
         return {};
     }
     const auto position = ray.origin + ray.direction * t;

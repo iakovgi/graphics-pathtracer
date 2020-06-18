@@ -1,5 +1,5 @@
-#ifndef PT_SCENE_H__
-#define PT_SCENE_H__
+#ifndef PATHTRACER_SCENE_H__
+#define PATHTRACER_SCENE_H__
 
 #include "camera.h"
 #include "object.h"
@@ -37,4 +37,4 @@ private:
     std::vector<std::unique_ptr<Object>> m_objects;
 };
 
-#endif // PT_SCENE_H__
+#endif // PATHTRACER_SCENE_H__

@@ -15,7 +15,7 @@ double Random::getUniform() noexcept
     return m_distribution(m_engine);
 }
 
-norm3_t Random::coneSample(Random& rng, const ONB& onb, const double aperture) noexcept
+norm3_t Random::coneSample(Random& rng, const Onb& onb, const double aperture) noexcept
 {
     const auto phi = 2 * M_PI * rng.getUniform();
     const auto theta = (aperture / 2.0) * rng.getUniform();

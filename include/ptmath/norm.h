@@ -1,5 +1,5 @@
-#ifndef PT_NORM_H__
-#define PT_NORM_H__
+#ifndef PATHTRACER_NORM_H__
+#define PATHTRACER_NORM_H__
 
 struct vec3_t;
 
@@ -22,7 +22,7 @@ struct norm3_t
     
     norm3_t(const vec3_t& that) noexcept;
     operator vec3_t() const noexcept;
-    
+
     double& operator[](const int idx) noexcept;
     const double& operator[](const int idx) const noexcept;
 
@@ -50,9 +50,9 @@ struct norm3_t
     
 private:
     norm3_t(const double x, const double y, const double z) noexcept;
-    friend class ONB;
+    friend class Onb;
 };
 
 vec3_t operator*(const double rhs, const norm3_t& lhs) noexcept;
 
-#endif // PT_NORM_H__
+#endif // PATHTRACER_NORM_H__

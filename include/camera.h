@@ -1,5 +1,5 @@
-#ifndef PT_CAMERA_H__
-#define PT_CAMERA_H__
+#ifndef PATHTRACER_CAMERA_H__
+#define PATHTRACER_CAMERA_H__
 
 #include "ptmath.h"
 
@@ -9,7 +9,7 @@ public:
     Camera(const vec3_t& eye,
            const norm3_t& gaze,
            const double vertFoV = 60.0,
-           const vec3_t& up = ONB::yAxis()) noexcept;
+           const vec3_t& up = Onb::yAxis()) noexcept;
     
     Camera() noexcept;
     ~Camera() noexcept = default;
@@ -29,9 +29,9 @@ private:
     mutable double m_dp;
     
     vec3_t m_eye;
-    ONB m_onb;
+    Onb m_onb;
 
     double m_fov;
 };
 
-#endif // PT_CAMERA_H__
+#endif // PATHTRACER_CAMERA_H__

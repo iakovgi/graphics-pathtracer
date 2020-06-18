@@ -1,5 +1,5 @@
-#ifndef PT_OBJECT_H__
-#define PT_OBJECT_H__
+#ifndef PATHTRACER_OBJECT_H__
+#define PATHTRACER_OBJECT_H__
 
 #include "ptmath.h"
 #include "material.h"
@@ -61,4 +61,4 @@ private:
     material_t m_material;
 };
 
-#endif // PT_OBJECT_H__
+#endif // PATHTRACER_OBJECT_H__

@@ -1,5 +1,5 @@
-#ifndef PT_VEC_H__
-#define PT_VEC_H__
+#ifndef PATHTRACER_VEC_H__
+#define PATHTRACER_VEC_H__
 
 struct norm3_t;
 
@@ -53,4 +53,4 @@ struct vec3_t
 
 vec3_t operator*(const double rhs, const vec3_t& lhs) noexcept;
 
-#endif // PT_VEC_H__
+#endif // PATHTRACER_VEC_H__

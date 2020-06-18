@@ -1,5 +1,5 @@
-#ifndef PT_PRIMITIVE_H__
-#define PT_PRIMITIVE_H__
+#ifndef PATHTRACER_PRIMITIVE_H__
+#define PATHTRACER_PRIMITIVE_H__
 
 struct ray_t;
 struct vec3_t;
@@ -22,4 +22,4 @@ public:
     virtual ~Primitive() noexcept = default;
 };
 
-#endif // PT_PRIMITIVE_H__
+#endif // PATHTRACER_PRIMITIVE_H__

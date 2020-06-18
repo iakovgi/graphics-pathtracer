@@ -1,5 +1,5 @@
-#ifndef PT_MATH_H__
-#define PT_MATH_H__
+#ifndef PATHTRACER_PTMATH_H__
+#define PATHTRACER_PTMATH_H__
 
 #include <cmath>
 
@@ -15,6 +15,6 @@
 #include "ptmath/sphere.h"
 #include "ptmath/triangle.h"
 
-static constexpr auto ptmath_epsilon = 1e-3;
+static constexpr auto PTMATH_EPSILON = 1e-3;
 
-#endif // PT_MATH_H__
+#endif // PATHTRACER_PTMATH_H__

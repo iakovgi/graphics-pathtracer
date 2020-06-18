@@ -1,5 +1,5 @@
-#ifndef PT_RAY_H__
-#define PT_RAY_H__
+#ifndef PATHTRACER_RAY_H__
+#define PATHTRACER_RAY_H__
 
 struct vec3_t;
 struct norm3_t;
@@ -20,4 +20,4 @@ struct ray_t
     ray_t& operator=(ray_t&& that) noexcept = default;
 };
 
-#endif // PT_RAY_H__
+#endif // PATHTRACER_RAY_H__

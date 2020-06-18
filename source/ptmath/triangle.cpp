@@ -14,11 +14,11 @@ std::optional<Primitive::intersection_t> Triangle::intersect(const ray_t& ray) c
     const auto pVec = ray.direction.cross(m_v02);
     const auto det = m_v01.dot(pVec);
     
-    if (std::abs(det) < ptmath_epsilon) {
+    if (std::abs(det) < PTMATH_EPSILON) {
         return {};
     }
 
-    const auto backfacing = det < ptmath_epsilon;
+    const auto backfacing = det < PTMATH_EPSILON;
 
     const auto invDet = 1.0 / det;
     const auto tVec = ray.origin - m_v0;
@@ -33,7 +33,7 @@ std::optional<Primitive::intersection_t> Triangle::intersect(const ray_t& ray) c
     }
 
     const auto t = m_v02.dot(qVec) * invDet;
-    if(t < ptmath_epsilon) {
+    if(t < PTMATH_EPSILON) {
         return {};
     }
 

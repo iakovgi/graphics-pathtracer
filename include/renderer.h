@@ -1,5 +1,5 @@
-#ifndef PT_RENDERER_H__
-#define PT_RENDERER_H__
+#ifndef PATHTRACER_RENDERER_H__
+#define PATHTRACER_RENDERER_H__
 
 #include "ptmath.h"
 #include "scene.h"
@@ -13,7 +13,7 @@
 class Renderer
 {
 public:
-    struct renderParams_t
+    struct render_params_t
     {
         size_t nThreads;
         
@@ -24,7 +24,7 @@ public:
         size_t maxDepth;
     };
     
-    Renderer(const renderParams_t& params) noexcept;
+    Renderer(const render_params_t& params) noexcept;
     ~Renderer() noexcept = default;
     
     template <typename FBOType>
@@ -41,7 +41,7 @@ private:
     ray_t getNextRay(Random& rng, const ray_t& ray, const Object::hit_t& hit) const noexcept;
     
 private:
-    renderParams_t m_params;
+    render_params_t m_params;
 };
 
 template <typename FBOType>
@@ -104,4 +104,4 @@ void Renderer::render(const Scene& scene, FBOType& fbo, const std::atomic<bool>&
     }
 }
 
-#endif // PT_RENDERER_H__
+#endif // PATHTRACER_RENDERER_H__

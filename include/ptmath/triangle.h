@@ -1,5 +1,5 @@
-#ifndef PT_TRIANGLE_H__
-#define PT_TRIANGLE_H__
+#ifndef PATHTRACER_TRIANGLE_H__
+#define PATHTRACER_TRIANGLE_H__
 
 #include "ptmath/primitive.h"
 
@@ -34,4 +34,4 @@ private:
     norm3_t m_orientation;
 };
 
-#endif // PT_TRIANGLE_H__
+#endif // PATHTRACER_TRIANGLE_H__

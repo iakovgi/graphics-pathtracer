@@ -1,5 +1,5 @@
-#ifndef PT_SCENEPRESETS_H__
-#define PT_SCENEPRESETS_H__
+#ifndef PATHTRACER_SCENEPRESETS_H__
+#define PATHTRACER_SCENEPRESETS_H__
 
 #include "scene.h"
 #include "object.h"
@@ -38,10 +38,9 @@ public:
     
     static Scene wada() noexcept
     {
-        double R=60;
-        //double R=120;
-        double T=30*M_PI/180.;
-        double D=R/cos(T);
+        double r =60;
+        double t = 30 * M_PI / 180.;
+        double d = r / cos(t);
         
         Scene scene;
         const auto camDir = vec3_t{ 0, -0.042612, -1 }.norm();
@@ -49,18 +48,18 @@ public:
         
         scene.addObject<SphereObject>(1e5, vec3_t{ 50, 100, 0 },
                                       material_t::createLight(vec3_t{ 3, 3, 3 })); // sky
-        scene.addObject<SphereObject>(1e5, vec3_t{ 50, -1e5-D-R, 0 },
+        scene.addObject<SphereObject>(1e5, vec3_t{ 50, -1e5 - d - r, 0 },
                                       material_t::createDiffuse(vec3_t{ .1, .1, .1 }));           //grnd
 
-        scene.addObject<SphereObject>(R, vec3_t{ 50, 40.8, 62 } + vec3_t{ cos(T), sin(T), 0 } * D,
+        scene.addObject<SphereObject>(r, vec3_t{ 50, 40.8, 62 } + vec3_t{ cos(t), sin(t), 0 } * d,
                                       material_t::createSpecular(vec3_t{ 1, .3, .3 }, 0.0)); //red
-        scene.addObject<SphereObject>(R, vec3_t{ 50, 40.8, 62 } + vec3_t{ -cos(T), sin(T), 0 } * D,
+        scene.addObject<SphereObject>(r, vec3_t{ 50, 40.8, 62 } + vec3_t{ -cos(t), sin(t), 0 } * d,
                                       material_t::createSpecular(vec3_t{ .3, 1, .3 }, 0.0)); //grn
-        scene.addObject<SphereObject>(R, vec3_t{ 50, 40.8, 62 } + vec3_t{ 0, -1, 0 } * D,
+        scene.addObject<SphereObject>(r, vec3_t{ 50, 40.8, 62 } + vec3_t{ 0, -1, 0 } * d,
                                       material_t::createSpecular(vec3_t{ .3, .3, 1 }, 0.0)); //blue
-        scene.addObject<SphereObject>(R, vec3_t{ 50, 40.8, 62 } + vec3_t{ 0, 0, -1 } * D,
+        scene.addObject<SphereObject>(r, vec3_t{ 50, 40.8, 62 } + vec3_t{ 0, 0, -1 } * d,
                                       material_t::createSpecular(vec3_t{ .53, .53, .53 }, 0.0)); //back
-        scene.addObject<SphereObject>(R, vec3_t{ 50, 40.8, 62 } + vec3_t{ 0, 0, 1 } * D,
+        scene.addObject<SphereObject>(r, vec3_t{ 50, 40.8, 62 } + vec3_t{ 0, 0, 1 } * d,
                                       material_t::createRefractive(vec3_t{ 1, 1, 1 }, 1.5, 0.0)); //front
         return scene;
     }
@@ -138,4 +137,4 @@ public:
     
 };
 
-#endif // PT_SCENEPRESETS_H__
+#endif // PATHTRACER_SCENEPRESETS_H__

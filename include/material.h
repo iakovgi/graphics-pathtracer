@@ -1,5 +1,5 @@
-#ifndef PT_MATERIAL_H__
-#define PT_MATERIAL_H__
+#ifndef PATHTRACER_MATERIAL_H__
+#define PATHTRACER_MATERIAL_H__
 
 #include "ptmath.h"
 

@@ -1,5 +1,5 @@
-#ifndef PT_SPHERE_H__
-#define PT_SPHERE_H__
+#ifndef PATHTRACER_SPHERE_H__
+#define PATHTRACER_SPHERE_H__
 
 #include "ptmath/primitive.h"
 
@@ -30,4 +30,4 @@ private:
     vec3_t m_position;
 };
 
-#endif // PT_SPHERE_H__
+#endif // PATHTRACER_SPHERE_H__

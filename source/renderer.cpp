@@ -2,7 +2,7 @@
 
 #include "ptmath.h"
 
-Renderer::Renderer(const Renderer::renderParams_t& params) noexcept:
+Renderer::Renderer(const Renderer::render_params_t& params) noexcept:
     m_params{ params }
 {}
 
@@ -58,13 +58,13 @@ ray_t Renderer::getNextRay(Random& rng, const ray_t& ray, const Object::hit_t& h
     
     switch (material.material_type) {
         case material_type_t::diffuse: {
-            const auto hitOnb = ONB::fromZ(normal);
+            const auto hitOnb = Onb::fromZ(normal);
             const auto nextDir = Random::coneSample(rng, hitOnb, M_PI);
             return ray_t(position, nextDir);
         }
         case material_type_t::specular: {
             const auto idealReflectDir = getIdealReflect(rayDir, normal);
-            const auto hitOnb = ONB::fromZ(idealReflectDir);
+            const auto hitOnb = Onb::fromZ(idealReflectDir);
             const auto aperture = material.roughness * M_PI;
             auto nextDir = Random::coneSample(rng, hitOnb, aperture);
             while(normal.dot(nextDir) < 0.0) {
@@ -82,13 +82,13 @@ ray_t Renderer::getNextRay(Random& rng, const ray_t& ray, const Object::hit_t& h
             const auto p = rng.getUniform();
             if(p < reflectivity) {
                 const auto idealReflectDir = getIdealReflect(rayDir, normal);
-                const auto hitOnb = ONB::fromZ(idealReflectDir);
+                const auto hitOnb = Onb::fromZ(idealReflectDir);
                 const auto aperture = material.roughness * M_PI;
                 const auto nextDir = Random::coneSample(rng, hitOnb, aperture);
                 return ray_t(position, nextDir);
             } else {
                 const auto idealTransmitDir = getIdealTransmit(rayDir, normal, ior_in, ior_out);
-                const auto hitOnb = ONB::fromZ(idealTransmitDir);
+                const auto hitOnb = Onb::fromZ(idealTransmitDir);
                 const auto aperture = material.roughness * M_PI;
                 const auto nextDir = Random::coneSample(rng, hitOnb, aperture);
                 return ray_t(position, nextDir);
