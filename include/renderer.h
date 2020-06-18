@@ -15,6 +15,8 @@ class Renderer
 public:
     struct render_params_t
     {
+        bool preview;
+
         size_t nThreads;
         
         size_t msaa;
@@ -55,7 +57,7 @@ void Renderer::render(const Scene& scene, FBOType& fbo, const std::atomic<bool>&
         }
     }
     
-    const auto renderPixel = [&](size_t px, size_t py) {
+    static const auto renderPixel = [&](size_t px, size_t py) {
         Random rng{};
         auto p_color = vec3_t{ 0.0, 0.0, 0.0 };
         for(auto s = 0u; s < m_params.spp && !stop; ++s) {
@@ -76,7 +78,7 @@ void Renderer::render(const Scene& scene, FBOType& fbo, const std::atomic<bool>&
         fbo[py * fbo.width() + px] = p_color;
     };
     
-    const auto renderLine = [&](const size_t py) {
+    static const auto renderLine = [&](const size_t py) {
         for(auto px = 0u; px < fbo.width(); ++px) {
             renderPixel(px, py);
         }
@@ -84,7 +86,7 @@ void Renderer::render(const Scene& scene, FBOType& fbo, const std::atomic<bool>&
     
     auto atomicLine = std::atomic<size_t>{};
     
-    const auto threadRoutine = [&]() {
+    static const auto threadRoutine = [&]() {
         while(true) {
             const auto line = atomicLine.fetch_add(1);
             if(line >= fbo.height()) {

@@ -4,7 +4,12 @@
 
 Renderer::Renderer(const Renderer::render_params_t& params) noexcept:
     m_params{ params }
-{}
+{
+    if(m_params.preview) {
+        m_params.msaa = 1;
+        m_params.spp = 1;
+    }
+}
 
 ray_t Renderer::getNextRay(Random& rng, const ray_t& ray, const Object::hit_t& hit) const noexcept
 {
@@ -95,6 +100,7 @@ ray_t Renderer::getNextRay(Random& rng, const ray_t& ray, const Object::hit_t& h
             }
         }
     }
+    return ray_t(vec3_t{}, vec3_t{});
 }
 
 vec3_t Renderer::radiance(Random& rng, const Scene& scene, const ray_t& ray, const int depth) const noexcept
@@ -108,10 +114,13 @@ vec3_t Renderer::radiance(Random& rng, const Scene& scene, const ray_t& ray, con
     const auto continueProbability = std::max(material.diffuse.r, std::max(material.diffuse.g, material.diffuse.b));
     
     auto diffuse = material.diffuse;
-    
+    if(m_params.preview) {
+        return diffuse * std::pow(hit->intersection.normal.dot(ray.direction), 2);
+    }
+
     if(depth > m_params.minDepth) {
         const auto p = rng.getUniform();
-        if(p < continueProbability && !(depth >= m_params.maxDepth)) {
+        if(p < continueProbability && depth < m_params.maxDepth) {
             diffuse = diffuse / continueProbability;
         } else {
             return hit->material.emission;

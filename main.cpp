@@ -12,7 +12,9 @@ int main(int argc, char *argv[])
     const auto scene = ScenePresets::cornellBox();
     
     const auto params = Renderer::render_params_t {
-        .nThreads = 8,
+        .preview = true,
+
+        .nThreads = std::thread::hardware_concurrency(),
         .msaa = 2,
         .spp = 96,
         
