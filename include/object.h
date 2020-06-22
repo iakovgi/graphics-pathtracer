@@ -3,8 +3,10 @@
 
 #include "ptmath.h"
 #include "material.h"
+#include "texture.h"
 
 #include <optional>
+#include <memory>
 
 class Object
 {
@@ -21,44 +23,78 @@ public:
     virtual ~Object() noexcept = default;
 };
 
-class SphereObject final: public Object
+class MonoMaterialSphere final: public Object
 {
 public:
     virtual std::optional<hit_t> hit(const ray_t& ray) const noexcept override;
     
-    SphereObject(const double radius, const vec3_t& position, const material_t& material) noexcept;
+    MonoMaterialSphere(const double radius, const vec3_t& position, const material_t& material) noexcept;
     
-    virtual ~SphereObject() noexcept override = default;
+    virtual ~MonoMaterialSphere() noexcept override = default;
     
-    SphereObject(const SphereObject& that) noexcept = default;
-    SphereObject(SphereObject&& that) noexcept = default;
+    MonoMaterialSphere(const MonoMaterialSphere& that) noexcept = default;
+    MonoMaterialSphere(MonoMaterialSphere&& that) noexcept = default;
     
-    SphereObject& operator=(const SphereObject& that) noexcept = default;
-    SphereObject& operator=(SphereObject&& that) noexcept = default;
+    MonoMaterialSphere& operator=(const MonoMaterialSphere& that) noexcept = default;
+    MonoMaterialSphere& operator=(MonoMaterialSphere&& that) noexcept = default;
 
 private:
-    Sphere m_primitive;
+    SpherePrimitive m_primitive;
     material_t m_material;
 };
 
-class TriangleObject final: public Object
+class MonoMaterialTriangle final: public Object
 {
 public:
     virtual std::optional<hit_t> hit(const ray_t& ray) const noexcept override;
     
-    TriangleObject(const vec3_t& v0, const vec3_t& v1, const vec3_t& v2, const material_t& material) noexcept;
+    MonoMaterialTriangle(const vec3_t& v0, const vec3_t& v1, const vec3_t& v2, const material_t& material) noexcept;
     
-    virtual ~TriangleObject() noexcept override = default;
+    virtual ~MonoMaterialTriangle() noexcept override = default;
     
-    TriangleObject(const TriangleObject& that) noexcept = default;
-    TriangleObject(TriangleObject&& that) noexcept = default;
+    MonoMaterialTriangle(const MonoMaterialTriangle& that) noexcept = default;
+    MonoMaterialTriangle(MonoMaterialTriangle&& that) noexcept = default;
     
-    TriangleObject& operator=(const TriangleObject& that) noexcept = default;
-    TriangleObject& operator=(TriangleObject&& that) noexcept = default;
+    MonoMaterialTriangle& operator=(const MonoMaterialTriangle& that) noexcept = default;
+    MonoMaterialTriangle& operator=(MonoMaterialTriangle&& that) noexcept = default;
 
 private:
-    Triangle m_primitive;
+    TrianglePrimitive m_primitive;
     material_t m_material;
+};
+
+class TextureTriangle final: public Object
+{
+public:
+    struct tex_coord_t
+    {
+        double s;
+        double t;
+    };
+
+    virtual std::optional<hit_t> hit(const ray_t& ray) const noexcept override;
+
+    TextureTriangle(const vec3_t& v0, const tex_coord_t& t0,
+                    const vec3_t& v1, const tex_coord_t& t1,
+                    const vec3_t& v2, const tex_coord_t& t2,
+                    const std::shared_ptr<Texture>& texture) noexcept;
+
+    virtual ~TextureTriangle() noexcept override = default;
+
+    TextureTriangle(const TextureTriangle& that) noexcept = default;
+    TextureTriangle(TextureTriangle&& that) noexcept = default;
+
+    TextureTriangle& operator=(const TextureTriangle& that) noexcept = default;
+    TextureTriangle& operator=(TextureTriangle&& that) noexcept = default;
+
+private:
+    TrianglePrimitive m_primitive;
+
+    tex_coord_t m_t0;
+    tex_coord_t m_t1;
+    tex_coord_t m_t2;
+
+    std::shared_ptr<Texture> m_texture;
 };
 
 #endif // PATHTRACER_OBJECT_H__

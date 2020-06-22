@@ -12,8 +12,6 @@
 #include "ptmath/ray.h"
 
 #include "ptmath/primitive.h"
-#include "ptmath/sphere.h"
-#include "ptmath/triangle.h"
 
 static constexpr auto PTMATH_EPSILON = 1e-3;
 
