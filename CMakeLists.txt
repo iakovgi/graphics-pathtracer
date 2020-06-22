@@ -21,15 +21,14 @@ file(GLOB ${PROJECT_UPPER_NAME}_HEADERS
     ${CMAKE_SOURCE_DIR}/include/ptmath/*
 )
 
+cmake_policy(SET CMP0072 NEW)
+find_package(OpenGL REQUIRED)
+include(hunter/HunterPackages.cmake)
+
+
 add_executable(${PROJECT_NAME} ${${PROJECT_UPPER_NAME}_SOURCE} ${${PROJECT_UPPER_NAME}_HEADERS})
 target_include_directories(${PROJECT_NAME} PRIVATE
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
 )
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
-cmake_policy(SET CMP0072 NEW)
-find_package(OpenGL REQUIRED)
-hunter_add_package(glfw)
-find_package(glfw3 REQUIRED)
-hunter_add_package(glew)
-find_package(glew REQUIRED)
-target_link_libraries(${PROJECT_NAME} glfw glew OpenGL::GL)
+target_link_libraries(${PROJECT_NAME} PRIVATE glfw glew OpenGL::GL Assimp::assimp stb::stb)
