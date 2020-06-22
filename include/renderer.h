@@ -74,6 +74,14 @@ void Renderer::render(const Scene& scene, FBOType& fbo, const std::atomic<bool>&
             p_color = p_color + s_color;
         }
         p_color = p_color / (double)(m_params.spp);
+        if(!m_params.preview) {
+            const auto gammaFactor = 2.2;
+            p_color = vec3_t{
+                std::pow(p_color.r, 1.0 / gammaFactor),
+                std::pow(p_color.g, 1.0 / gammaFactor),
+                std::pow(p_color.b, 1.0 / gammaFactor)
+            };
+        }
         auto latch = std::lock_guard<std::mutex>(fbo.mutex);
         fbo[py * fbo.width() + px] = p_color;
     };

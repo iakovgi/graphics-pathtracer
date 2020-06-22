@@ -237,7 +237,7 @@ void RenderWindow::swapBuffers()
     glBindBuffer(GL_PIXEL_UNPACK_BUFFER, m_pboFront);
 
     static const auto componentToInt = [](const double v) -> std::uint8_t {
-        return (std::uint8_t)((std::pow(v / (v + 1.0), 1.0 / 2.2)) * 255);
+        return (std::uint8_t)(v * std::numeric_limits<std::uint8_t>::max());
     };
     
     color_t *pixelData = (color_t*)glMapBuffer(GL_PIXEL_UNPACK_BUFFER, GL_WRITE_ONLY);
