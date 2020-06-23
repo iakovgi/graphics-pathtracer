@@ -11,7 +11,7 @@ class Texture
 {
 public:
     Texture(Texture&& that) noexcept;
-    Texture(std::size_t width, std::size_t height);
+    Texture(std::size_t width, std::size_t height, std::unique_ptr<vec3_t[]>&& data = nullptr);
 
     static Texture load(const std::string_view& filename);
 

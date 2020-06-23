@@ -12,11 +12,16 @@ Texture::Texture(Texture &&that) noexcept
     std::swap(m_height, that.m_height);
 }
 
-Texture::Texture(const std::size_t width, const std::size_t height):
-    m_data{ std::make_unique<vec3_t[]>(width * height) },
+Texture::Texture(const std::size_t width, const std::size_t height, std::unique_ptr<vec3_t[]>&& data):
     m_width{ width },
     m_height{ height }
-{}
+{
+    if(nullptr != data) {
+        m_data = std::move(data);
+    } else {
+        m_data = std::make_unique<vec3_t[]>(m_width * m_height);
+    }
+}
 
 Texture Texture::load(const std::string_view &filename)
 {
