@@ -24,7 +24,12 @@ public:
     {
         m_objects.emplace_back(std::make_unique<ObjectType>(args...));
     }
-    
+
+    Object& lastObject() noexcept
+    {
+        return *m_objects.back();
+    }
+
     ray_t randomRay(Random& rng, size_t px, size_t py) const noexcept;
     
     Scene(const Scene& that) noexcept = delete;

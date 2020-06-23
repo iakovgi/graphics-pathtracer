@@ -97,4 +97,42 @@ private:
     std::shared_ptr<Texture> m_texture;
 };
 
+class Mesh final: public Object
+{
+private:
+    struct face_t;
+
+public:
+    Mesh() noexcept = default;
+    virtual ~Mesh() noexcept override = default;
+
+    virtual std::optional<hit_t> hit(const ray_t& ray) const noexcept override;
+
+    Mesh(const std::vector<face_t>& faces,
+         const std::vector<vec3_t>& positions,
+         const std::vector<TextureTriangle::tex_coord_t>& texCoords,
+         const material_t& material,
+         const std::shared_ptr<Texture>& texture = nullptr) noexcept;
+
+    Mesh(const Mesh& that) noexcept = default;
+    Mesh(Mesh&& that) noexcept = delete;
+    Mesh& operator=(const Mesh& that) noexcept = delete;
+    Mesh& operator=(Mesh&& that) noexcept = delete;
+
+private:
+    struct face_t
+    {
+        std::uint32_t indices[3];
+    };
+
+private:
+    std::vector<face_t> m_faces;
+
+    std::vector<vec3_t> m_positions;
+    std::vector<TextureTriangle::tex_coord_t> m_texCoords;
+
+    material_t m_material;
+    std::shared_ptr<Texture> m_texture;
+};
+
 #endif // PATHTRACER_OBJECT_H__

@@ -37,8 +37,8 @@ std::optional<Object::hit_t> MonoMaterialTriangle::hit(const ray_t& ray) const n
     if(!intersection) {
         return {};
     }
-    const auto norm = m_primitive.norm();
-    const auto inside = ray.direction.dot(norm) > 0.0;
+    const auto orientation = m_primitive.norm();
+    const auto inside = ray.direction.dot(orientation) > 0.0;
     return hit_t{
         intersection.value(),
         m_material,
@@ -89,6 +89,53 @@ TextureTriangle::TextureTriangle(const vec3_t& v0, const tex_coord_t& t0,
     m_t0{ t0 },
     m_t1{ t1 },
     m_t2{ t2 },
+    m_texture{ texture }
+{}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+// Mesh ----------------------------------------------------------------------------------------------------------------
+
+std::optional<Object::hit_t> Mesh::hit(const ray_t &ray) const noexcept
+{
+    auto nearest = std::numeric_limits<double>::max();
+    std::optional<hit_t> hit;
+    for(const auto& face: m_faces) {
+        std::optional<hit_t> tmp;
+        if(nullptr == m_texture) {
+            const auto triangle = MonoMaterialTriangle(
+                m_positions[face.indices[0]],
+                m_positions[face.indices[1]],
+                m_positions[face.indices[2]],
+                m_material
+            );
+            tmp = triangle.hit(ray);
+        } else {
+            const auto triangle = TextureTriangle{
+                m_positions[face.indices[0]], m_texCoords[face.indices[0]],
+                m_positions[face.indices[1]], m_texCoords[face.indices[1]],
+                m_positions[face.indices[2]], m_texCoords[face.indices[2]],
+                m_texture
+            };
+            tmp = triangle.hit(ray);
+        }
+        if(tmp && tmp->intersection.distance < nearest) {
+            hit = tmp;
+            nearest = hit->intersection.distance;
+        }
+    }
+    return hit;
+}
+
+Mesh::Mesh(const std::vector<face_t>& faces,
+           const std::vector<vec3_t>& positions,
+           const std::vector<TextureTriangle::tex_coord_t>& texCoords,
+           const material_t& material,
+           const std::shared_ptr<Texture> &texture) noexcept:
+    m_faces{ faces },
+    m_positions{ positions },
+    m_texCoords{ texCoords },
+    m_material{ material },
     m_texture{ texture }
 {}
 
