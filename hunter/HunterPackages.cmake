@@ -9,3 +9,6 @@ find_package(stb CONFIG REQUIRED)
 
 hunter_add_package(Assimp)
 find_package(Assimp REQUIRED)
+
+hunter_add_package(fmt)
+find_package(fmt CONFIG REQUIRED)

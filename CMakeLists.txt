@@ -30,5 +30,6 @@ add_executable(${PROJECT_NAME} ${${PROJECT_UPPER_NAME}_SOURCE} ${${PROJECT_UPPER
 target_include_directories(${PROJECT_NAME} PRIVATE
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
 )
+#target_compile_options(${PROJECT_NAME} PRIVATE "-Ofast")
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
-target_link_libraries(${PROJECT_NAME} PRIVATE glfw glew OpenGL::GL Assimp::assimp stb::stb)
+target_link_libraries(${PROJECT_NAME} PRIVATE glfw glew OpenGL::GL Assimp::assimp stb::stb fmt)
