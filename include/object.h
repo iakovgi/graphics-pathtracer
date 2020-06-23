@@ -99,8 +99,11 @@ private:
 
 class Mesh final: public Object
 {
-private:
-    struct face_t;
+public:
+    struct face_t
+    {
+        std::uint32_t indices[3];
+    };
 
 public:
     Mesh() noexcept = default;
@@ -118,12 +121,6 @@ public:
     Mesh(Mesh&& that) noexcept = delete;
     Mesh& operator=(const Mesh& that) noexcept = delete;
     Mesh& operator=(Mesh&& that) noexcept = delete;
-
-private:
-    struct face_t
-    {
-        std::uint32_t indices[3];
-    };
 
 private:
     std::vector<face_t> m_faces;
