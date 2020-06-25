@@ -103,12 +103,12 @@ std::optional<Object::hit_t> Mesh::hit(const ray_t &ray) const noexcept
     for(const auto& face: m_faces) {
         std::optional<hit_t> tmp;
         if(nullptr == m_texture) {
-            const auto triangle = MonoMaterialTriangle(
+            const auto triangle = MonoMaterialTriangle{
                 m_positions[face.indices[0]],
                 m_positions[face.indices[1]],
                 m_positions[face.indices[2]],
                 m_material
-            );
+            };
             tmp = triangle.hit(ray);
         } else {
             const auto triangle = TextureTriangle{
