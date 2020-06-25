@@ -77,9 +77,9 @@ void Renderer::render(const Scene& scene, FBOType& fbo, const std::atomic<bool>&
         if(!m_params.preview) {
             const auto gammaFactor = 2.2;
             p_color = vec3_t{
-                std::pow(p_color.r, 1.0 / gammaFactor),
-                std::pow(p_color.g, 1.0 / gammaFactor),
-                std::pow(p_color.b, 1.0 / gammaFactor)
+                std::pow(std::clamp(p_color.r, 0.0, 1.0), 1.0 / gammaFactor),
+                std::pow(std::clamp(p_color.g, 0.0, 1.0), 1.0 / gammaFactor),
+                std::pow(std::clamp(p_color.b, 0.0, 1.0), 1.0 / gammaFactor)
             };
         }
         auto latch = std::lock_guard<std::mutex>(fbo.mutex);
