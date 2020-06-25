@@ -40,7 +40,7 @@ struct material_t
         };
     }
     
-    static material_t createSpecular(const vec3_t& diffuse, const double roughness) noexcept {
+    static material_t createSpecular(const vec3_t& diffuse, const double roughness = 0.0) noexcept {
         return material_t{
             .diffuse = diffuse,
             .emission = vec3_t{ 0.0, 0.0, 0.0 },
@@ -50,7 +50,7 @@ struct material_t
         };
     }
     
-    static material_t createRefractive(const vec3_t& diffuse, const double ior, const double roughness) noexcept {
+    static material_t createRefractive(const vec3_t& diffuse, const double ior = 1.45, const double roughness = 0.0) noexcept {
         return material_t{
             .diffuse = diffuse,
             .emission = vec3_t{ 0.0, 0.0, 0.0 },
