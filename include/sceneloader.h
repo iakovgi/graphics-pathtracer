@@ -3,6 +3,8 @@
 
 #include "scene.h"
 
+#include <assimp/scene.h>
+
 #include <string_view>
 
 class SceneLoader
@@ -12,6 +14,8 @@ public:
 
 private:
     virtual ~SceneLoader() = 0;
+
+    static Camera deduceCamera(const aiScene *aiScene);
 };
 
 #endif //PATHTRACER_SCENELOADER_H__
