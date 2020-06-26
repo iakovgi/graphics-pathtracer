@@ -13,7 +13,7 @@ std::optional<Object::hit_t> MonoMaterialSphere::hit(const ray_t& ray) const noe
     if(!intersection) {
         return {};
     } else {
-        const auto inside = (ray.origin - m_primitive.position()).lenSquared() < m_primitive.radiusSquared();
+        const auto inside = (ray.origin - m_primitive.position).len() < m_primitive.radius;
         return hit_t{
             intersection.value(),
             m_material,
@@ -37,7 +37,7 @@ std::optional<Object::hit_t> MonoMaterialTriangle::hit(const ray_t& ray) const n
     if(!intersection) {
         return {};
     }
-    const auto orientation = m_primitive.norm();
+    const auto orientation = m_primitive.normal;
     const auto inside = ray.direction.dot(orientation) > 0.0;
     return hit_t{
         intersection.value(),
@@ -56,11 +56,11 @@ std::optional<Object::hit_t> TextureTriangle::hit(const ray_t &ray) const noexce
     if(!intersection) {
         return {};
     }
-    const auto inside = ray.direction.dot(m_primitive.norm()) > 0.0;
+    const auto inside = ray.direction.dot(m_primitive.normal) > 0.0;
 
-    const auto p1 = intersection->position - m_primitive.v0();
-    const auto v01 = m_primitive.v1() - m_primitive.v0();
-    const auto v02 = m_primitive.v2() - m_primitive.v0();
+    const auto p1 = intersection->position - m_primitive.v0;
+    const auto v01 = m_primitive.v1 - m_primitive.v0;
+    const auto v02 = m_primitive.v2 - m_primitive.v0;
 
     const auto s0Squared = v01.cross(v02).lenSquared();
     const auto beta = std::sqrt(p1.cross(v02).lenSquared() / s0Squared);

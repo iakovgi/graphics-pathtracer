@@ -1,6 +1,7 @@
 #include "renderer.h"
 
 #include "ptmath.h"
+#include "sampler.h"
 
 Renderer::Renderer(const Renderer::render_params_t& params) noexcept:
     m_params{ params }
@@ -14,7 +15,7 @@ Renderer::Renderer(const Renderer::render_params_t& params) noexcept:
 ray_t Renderer::getNextRay(Random& rng, const ray_t& ray, const Object::hit_t& hit) const noexcept
 {
     static const auto getIdealReflect = [](const norm3_t& rayDir, const norm3_t& norm) -> norm3_t {
-        return rayDir - 2.0 * norm.dot(rayDir) * norm;
+        return rayDir - norm * 2.0 * norm.dot(rayDir);
     };
     
     static const auto getReflectivity = [](const norm3_t& rayDir, const norm3_t& norm,
@@ -53,7 +54,7 @@ ray_t Renderer::getNextRay(Random& rng, const ray_t& ray, const Object::hit_t& h
         const auto cos_i = -1.0 * rayDir.dot(norm);
         const auto iorRatio = ior_in / ior_out;
         const auto sin_t2 = iorRatio * iorRatio * (1.0 - cos_i * cos_i);
-        return rayDir * iorRatio + (iorRatio * cos_i - std::sqrt(1.0 - sin_t2)) * norm;
+        return rayDir * iorRatio + norm * (iorRatio * cos_i - std::sqrt(1.0 - sin_t2));
     };
     
     const auto material = hit.material;
@@ -63,17 +64,17 @@ ray_t Renderer::getNextRay(Random& rng, const ray_t& ray, const Object::hit_t& h
     
     switch (material.material_type) {
         case material_type_t::diffuse: {
-            const auto hitOnb = Onb::fromZ(normal);
-            const auto nextDir = Random::coneSample(rng, hitOnb, M_PI);
+            const auto hitOnb = OrthoNormalBasis::fromZ(normal);
+            const auto nextDir = Sampler::coneSample(rng, hitOnb, M_PI);
             return ray_t(position, nextDir);
         }
         case material_type_t::specular: {
             const auto idealReflectDir = getIdealReflect(rayDir, normal);
-            const auto hitOnb = Onb::fromZ(idealReflectDir);
+            const auto hitOnb = OrthoNormalBasis::fromZ(idealReflectDir);
             const auto aperture = material.roughness * M_PI;
-            auto nextDir = Random::coneSample(rng, hitOnb, aperture);
+            auto nextDir = Sampler::coneSample(rng, hitOnb, aperture);
             while(normal.dot(nextDir) < 0.0) {
-                nextDir = Random::coneSample(rng, hitOnb, aperture);
+                nextDir = Sampler::coneSample(rng, hitOnb, aperture);
             }
             return ray_t(position, nextDir);
         }
@@ -87,20 +88,29 @@ ray_t Renderer::getNextRay(Random& rng, const ray_t& ray, const Object::hit_t& h
             const auto p = rng.getUniform();
             if(p < reflectivity) {
                 const auto idealReflectDir = getIdealReflect(rayDir, normal);
-                const auto hitOnb = Onb::fromZ(idealReflectDir);
+                const auto hitOnb = OrthoNormalBasis::fromZ(idealReflectDir);
                 const auto aperture = material.roughness * M_PI;
-                const auto nextDir = Random::coneSample(rng, hitOnb, aperture);
+                const auto nextDir = Sampler::coneSample(rng, hitOnb, aperture);
                 return ray_t(position, nextDir);
             } else {
                 const auto idealTransmitDir = getIdealTransmit(rayDir, normal, ior_in, ior_out);
-                const auto hitOnb = Onb::fromZ(idealTransmitDir);
+                const auto hitOnb = OrthoNormalBasis::fromZ(idealTransmitDir);
                 const auto aperture = material.roughness * M_PI;
-                const auto nextDir = Random::coneSample(rng, hitOnb, aperture);
+                const auto nextDir = Sampler::coneSample(rng, hitOnb, aperture);
                 return ray_t(position, nextDir);
             }
         }
     }
     return ray_t(vec3_t{}, vec3_t{});
+}
+
+vec3_t operator*(const vec3_t &lhs, const vec3_t &rhs) noexcept
+{
+    return vec3_t{
+        lhs.r * rhs.r,
+        lhs.g * rhs.g,
+        lhs.b * rhs.b
+    };
 }
 
 vec3_t Renderer::radiance(Random& rng, const Scene& scene, const ray_t& ray, const int depth) const noexcept
