@@ -25,6 +25,9 @@ cmake_policy(SET CMP0072 NEW)
 find_package(OpenGL REQUIRED)
 include(hunter/HunterPackages.cmake)
 
+include(extern/graphics-common-math/graphics_common_math.cmake)
+set(${PROJECT_UPPER_NAME}_HEADERS ${${PROJECT_UPPER_NAME}_HEADERS} ${GRAPHICS_COMMON_MATH_HEADERS})
+set(${PROJECT_UPPER_NAME}_SOURCE ${${PROJECT_UPPER_NAME}_SOURCE} ${GRAPHICS_COMMON_MATH_SOURCE})
 
 add_executable(${PROJECT_NAME} ${${PROJECT_UPPER_NAME}_SOURCE} ${${PROJECT_UPPER_NAME}_HEADERS})
 target_include_directories(${PROJECT_NAME} PRIVATE

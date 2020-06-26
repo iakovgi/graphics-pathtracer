@@ -3,16 +3,24 @@
 
 #include <cmath>
 
-#include "ptmath/vec.h"
-#include "ptmath/norm.h"
-#include "ptmath/onb.h"
+using real_t = double;
 
-#include "ptmath/random.h"
+#include "vec.h"
+#include "norm.h"
+#include "onb.h"
+#include "random.h"
+#include "ray.h"
+#include "primitive.h"
 
-#include "ptmath/ray.h"
+using vec3_t = graphics::math::vec3_t<real_t>;
+using norm3_t = graphics::math::norm3_t<real_t>;
+using OrthoNormalBasis = graphics::math::OrthoNormalBasis<real_t>;
+using Random = graphics::math::Random;
+using ray_t = graphics::math::ray_t<real_t>;
+using Primitive = graphics::math::Primitive<real_t>;
+using SpherePrimitive = graphics::math::SpherePrimitive<real_t>;
+using TrianglePrimitive = graphics::math::TrianglePrimitive<real_t>;
 
-#include "ptmath/primitive.h"
-
-static constexpr auto PTMATH_EPSILON = 1e-3;
+static constexpr real_t PTMATH_EPSILON = 32 * std::numeric_limits<float>::epsilon();
 
 #endif // PATHTRACER_PTMATH_H__

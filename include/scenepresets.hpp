@@ -11,7 +11,7 @@ public:
     static Scene smallpt() noexcept
     {
         auto scene = Scene();
-        const auto camDir = vec3_t{ 0, -0.042612, -1 }.norm();
+        const auto camDir = (norm3_t)vec3_t{ 0, -0.042612, -1 };
         const auto camPos = vec3_t{ 50, 52, 295.6 } + camDir * 131.0 + vec3_t{ 0.0, 3.0, 0.0 };
         scene.camera = Camera(camPos, camDir);
         
@@ -43,7 +43,7 @@ public:
         double d = r / cos(t);
         
         Scene scene;
-        const auto camDir = vec3_t{ 0, -0.042612, -1 }.norm();
+        const auto camDir = (norm3_t)vec3_t{ 0, -0.042612, -1 };
         scene.camera = Camera(vec3_t{ 50, 52, 295.6 }, camDir);
         
         scene.addObject<MonoMaterialSphere>(1e5, vec3_t{ 50, 100, 0 },
@@ -70,7 +70,7 @@ public:
         
         const auto centre = vec3_t{ 73, 16.5, 78 };
         const auto camPos = centre + vec3_t{ 0.0, 0.0, 1.0 } * (3 * 16.5) + vec3_t{ +20.0, 0.0, 0.0 };
-        const auto camDir = (vec3_t{ 27, 16.5, 47 } - camPos).norm();
+        const auto camDir = (norm3_t)(vec3_t{ 27, 16.5, 47 } - camPos);
         scene.camera = Camera(camPos, camDir);
         
         const auto addCube = [&](const vec3_t& low, const vec3_t& high, const material_t& material) {
@@ -122,7 +122,7 @@ public:
         addCube(cubeLow, cubeHigh, material_t::createSpecular(vec3_t{ 0.2, 0.2, 0.9 }, 0.1));
         
         cubeSize = 14;
-        cubeOrigin = cubeOrigin - vec3_t{ 0, -0.042612, -1 }.norm() * 35 - vec3_t{ 0.0, cubeSize * 0.8, 0.0 };
+        cubeOrigin = cubeOrigin - (norm3_t)vec3_t{ 0, -0.042612, -1 } * 35 - vec3_t{ 0.0, cubeSize * 0.8, 0.0 };
         cubeLow = cubeOrigin + vec3_t{ -cubeSize / 2.0, -cubeSize / 2.0, -cubeSize / 2.0 };
         cubeHigh = cubeOrigin + vec3_t{ cubeSize / 2.0, cubeSize / 2.0, cubeSize / 2.0 };
         addCube(cubeLow, cubeHigh, material_t::createDiffuse(vec3_t{ 0.2, 0.8, 0.2 }));

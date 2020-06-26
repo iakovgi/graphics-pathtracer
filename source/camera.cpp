@@ -12,7 +12,7 @@ Camera::Camera(const vec3_t& eye, const norm3_t& gaze, const double vertFoV, con
     const norm3_t x = gaze.cross(up);
     const norm3_t y = x.cross(z);
     
-    m_onb = Onb(x, y, z);
+    m_onb = OrthoNormalBasis(x, y, z);
 }
 
 Camera::Camera() noexcept
@@ -37,5 +37,5 @@ ray_t Camera::randomRay(Random& rng, size_t px, size_t py) const noexcept
 
     const auto local = vec3_t{ q, p, 1.0 };
     
-    return ray_t(m_eye, m_onb.toWorld(local.norm()));
+    return ray_t(m_eye, m_onb.toWorld((norm3_t)local));
 }

@@ -1,6 +1,6 @@
 #include "RenderWindow.h"
 
-#include "ptmath/vec.h"
+#include "ptmath.h"
 
 #include <cmath>
 #include <stdexcept>

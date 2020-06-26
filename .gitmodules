@@ -1,0 +1,3 @@
+[submodule "extern/graphics-common-math"]
+	path = extern/graphics-common-math
+	url = https://github.com/imcuber/graphics-common-math/

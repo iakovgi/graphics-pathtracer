@@ -1,6 +1,8 @@
 #ifndef PATHTRACER_RENDERWINDOW_H__
 #define PATHTRACER_RENDERWINDOW_H__
 
+#include "ptmath.h"
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -8,8 +10,6 @@
 #include <string>
 #include <string_view>
 #include <mutex>
-
-struct vec3_t;
 
 class RenderWindow
 {

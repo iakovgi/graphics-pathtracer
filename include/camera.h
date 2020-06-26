@@ -9,7 +9,7 @@ public:
     Camera(const vec3_t& eye,
            const norm3_t& gaze,
            const double vertFoV = 60.0,
-           const vec3_t& up = Onb::yAxis()) noexcept;
+           const vec3_t& up = OrthoNormalBasis::worldY()) noexcept;
     
     Camera() noexcept;
     ~Camera() noexcept = default;
@@ -29,7 +29,7 @@ private:
     mutable double m_dp;
     
     vec3_t m_eye;
-    Onb m_onb;
+    OrthoNormalBasis m_onb;
 
     double m_fov;
 };
