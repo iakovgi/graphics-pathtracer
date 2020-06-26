@@ -30,9 +30,7 @@ set(${PROJECT_UPPER_NAME}_HEADERS ${${PROJECT_UPPER_NAME}_HEADERS} ${GRAPHICS_CO
 set(${PROJECT_UPPER_NAME}_SOURCE ${${PROJECT_UPPER_NAME}_SOURCE} ${GRAPHICS_COMMON_MATH_SOURCE})
 
 add_executable(${PROJECT_NAME} ${${PROJECT_UPPER_NAME}_SOURCE} ${${PROJECT_UPPER_NAME}_HEADERS})
-target_include_directories(${PROJECT_NAME} PRIVATE
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-)
+target_include_directories(${PROJECT_NAME} include ${GRAPHICS_COMMON_MATH_INCLUDE_DIR})
 #target_compile_options(${PROJECT_NAME} PRIVATE "-Ofast")
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 target_link_libraries(${PROJECT_NAME} PRIVATE glfw glew OpenGL::GL Assimp::assimp stb::stb fmt)
